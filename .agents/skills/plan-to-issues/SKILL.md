@@ -8,6 +8,20 @@ description: Split this repo's plan.md into GitHub issues with gh, one per unit 
 Turns `plan.md` into GitHub issues that workers can pick up cold. Easiest with `gh`, authenticated,
 in a shell this agent can run.
 
+## Forme des issues (convenue le 2026-11-21, ne plus la redemander)
+
+Chaque issue porte le label `plan:<nom du plan>` et ce corps, dans cet ordre :
+
+1. `Source : plan.md § <section>`
+2. `## Portée` : puces, fichiers et règles (ADR citées).
+3. `## Fait quand` : la ligne « Done when » du plan, vérifiable.
+4. `## Bloqué par` : numéros réels (`#n`), ou `—`.
+5. `## Worker` : modèle suggéré et pourquoi, puis « Fermer avec le commentaire de AGENTS.md ».
+
+Une étape qui attend quelqu'un d'autre (relecteur, client) est sa propre issue. Son « Fait quand »
+est la confirmation de cette personne, pas l'envoi. Elle reste ouverte jusque-là et bloque le
+nettoyage qui suit.
+
 ## Steps
 
 1. Read `plan.md`, `AGENTS.md` and `docs/adr/`.
