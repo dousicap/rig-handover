@@ -1,0 +1,54 @@
+name: preview
+
+# Plan morning-digest § 3 et § 4 (ADR 0003). Enregistre une page du digest en un seul fichier HTML
+# et la met sur GitHub Pages. La page n'est jamais commitée : elle est produite ici, à chaque run.
+# Run avec marker = le marqueur de lane : preview pour relecture (#7).
+# Run avec marker vide : même lien, bandeau « no marker set » (#8).
+on:
+  workflow_dispatch:
+    inputs:
+      night:
+        description: Nuit à publier (AAAA-MM-JJ)
+        required: true
+        default: '2026-10-28'
+      marker:
+        description: Marqueur de lane (vide pour le nettoyage)
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}digest-${{ inputs.night }}.html
+    env:
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: corepack pnpm@12.21.0 install --frozen-lockfile
+      - name: Enregistrer la page
+        env:
+          LANE_MARKER: ${{ inputs.marker }}
+          NIGHT: ${{ inputs.night }}
+        run: |
+          corepack pnpm@12.21.0 start &
+          mkdir _site
+          curl -sf --retry 20 --retry-connrefused --retry-delay 1 -o "_site/digest-$NIGHT.html" "http://localhost:8787/digest/$NIGHT"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4
