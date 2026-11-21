@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-11-21
 ---
 
 # Morning digest
@@ -77,3 +78,20 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+Issues in dousicap/rig-handover, written in French; titles here in the plan's language.
+
+| # | Issue | Blocked by | Worker | Closed |
+|---|-------|-----------|--------|--------|
+| 1 | Digest types: DigestRow and readNight signature | — | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+| 2 | Run log reader | #1 | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+| 3 | Digest page: GET /digest/:night | #1 | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+| 4 | Digest JSON: GET /api/digest/:night | #1 | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+| 5 | Board links each night to its digest | #1 | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+| 6 | Route tests for the digest page and JSON | #3, #4 | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+| 7 | Preview for review | #2–#6 | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+| 8 | Clean up the preview | #7 and the reviewer's review | claude-code · opus-5.5 · effort non relevé | 2026-11-21 |
+
+The reviewer confirmed the preview on 2026-11-21 before the marker came off (ADR 0003).
